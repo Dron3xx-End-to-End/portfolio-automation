@@ -1,0 +1,13 @@
+name: Portfolio Update
+
+on:
+  repository_dispatch:
+    types: [project-update]
+
+jobs:
+  update-portfolio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show repo url
+        run: echo "${{ github.event.client_payload.repo_url }}"
