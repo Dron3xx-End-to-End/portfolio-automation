@@ -1,0 +1,16 @@
+name: Test
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: app token test
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.PORTFOLIO_APP_ID }}
+          private-key: ${{ secrets.PORTFOLIO_APP_PRIVATE_KEY }}
