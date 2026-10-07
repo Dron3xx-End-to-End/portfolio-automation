@@ -21,7 +21,7 @@ jobs:
 
       - name: Download portfolio update
         run: |    
-          REPO_PATH=$(echo "${{ github.event.client_payload.repo_url }}" | sed -E 's|https://github.com/||' | sed -E 's|\.git$||')
+          REPO_PATH=$(echo "${{ github.event.client_payload.repo_url }}" | sed -E 's|git://github.com/||' | sed -E 's|\.git$||')
 
           curl -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
                -H "Accept: application/vnd.github.v3.raw" \
