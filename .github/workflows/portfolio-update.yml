@@ -29,3 +29,6 @@ jobs:
                -o source-portfolio-update.md
 
           cat source-portfolio-update.md
+
+      - name: Parse source file
+        run: python scripts/parse-portfolio-update.py source-portfolio-update.md
