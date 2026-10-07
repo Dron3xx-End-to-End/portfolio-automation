@@ -1,0 +1,58 @@
+import sys
+
+source_file = sys.argv[1]
+
+
+def parse_portfolio_update(source_file):
+    data = {
+        "project_name": "",
+        "description_en": "",
+        "description_pl": "",
+        "technologies": [],
+    }
+
+    section = None
+    under_section = None
+    with open(source_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            strip_line = line.strip()
+
+            if not strip_line:
+                continue
+
+            if strip_line.startswith("## "):
+                section = strip_line.replace("## ", "").lower()
+            
+            elif strip_line.startswith("### "):
+                under_section = strip_line.replace("### ", "").lower()
+
+            else:
+                if section == "project name":
+                    data["project_name"] = strip_line
+
+                elif section == "technologies":
+                    data["technologies"].append(strip_line.strip("- "))
+
+                elif section == "description" and under_section == "english":
+                    data["description_en"] = strip_line
+
+                elif section == "description" and under_section == "polski":
+                    data["description_pl"] = strip_line
+
+    return data
+
+
+data = parse_portfolio_update(source_file)
+
+if data["project_name"] == "":
+    print("Missing project name in source file")
+    sys.exit(1)
+elif data["technologies"] == []:
+    print("Missing technologies in source file")
+    sys.exit(1)
+elif data["description_en"] == "":
+    print("Missing description_en in source file")
+    sys.exit(1)
+elif data["description_pl"] == "":
+    print("Missing description_pl in source file")
+    sys.exit(1)
