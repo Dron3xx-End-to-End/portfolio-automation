@@ -43,12 +43,17 @@ def load_portfolio(portfolio, repo_url):
 
     for project in project_items:
         project_link_element = project.find("a", class_="project-link")
+
+        if project_link_element is None:
+            continue
+
         project_link = (
             project_link_element
             .get("href")
             .split("/")[-1]
             .removesuffix(".git")
         )
+        
 
         if project_link == repo_name:
             project_found = True
