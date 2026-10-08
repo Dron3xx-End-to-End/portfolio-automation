@@ -4,6 +4,7 @@ def parse_portfolio_update(source_file):
         "description_en": "",
         "description_pl": "",
         "technologies": [],
+        "project_status": "",
     }
 
     section = None
@@ -33,5 +34,8 @@ def parse_portfolio_update(source_file):
 
                 elif section == "description" and under_section == "polski":
                     data["description_pl"] = strip_line
+
+                elif section == "status":
+                    data["project_status"] = strip_line
 
     return data

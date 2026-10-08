@@ -1,5 +1,5 @@
 import sys
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 
 from scripts.parse_portfolio_update import parse_portfolio_update
 
@@ -98,6 +98,11 @@ def load_portfolio(portfolio, repo_url):
         print("update")
     else:
         print("creating new project")
+        projects_list = soup.find("ul", class_="projects-list")
+        marker = projects_list.find(text=lambda text: isinstance(text, Comment))
+        if marker == "AUTO-GENERATED PROJECTS":
+            print(marker)
+            print(type(marker))
 
     return soup
 

@@ -19,3 +19,7 @@ Automatyzacja GitHub Actions do przetwarzania aktualizacji projektów i synchron
 - GitHub Actions
 - GitHub API
 - Python
+
+## Status
+
+In progress
