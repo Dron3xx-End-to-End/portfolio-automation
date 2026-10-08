@@ -130,7 +130,8 @@ def load_portfolio(portfolio, repo_url):
         print("creating new project")
         projects_list = soup.find("ul", class_="projects-list")
         marker = projects_list.find(string=lambda text: isinstance(text, Comment))
-        if marker == "AUTO-GENERATED PROJECTS":
+        marker = marker.strip()
+        if marker == "<!-- AUTO-GENERATED PROJECTS -->":
             new_project = soup.new_tag("li")
             new_project["class"] = "project-item"
 
