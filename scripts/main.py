@@ -256,10 +256,8 @@ def modify_portfolio(portfolio, repo_url):
 
             new_project_html = (
                 marker_indent
-                + new_project_html.replace(
-                    "\n",
-                    "\n" + marker_indent
-                )
+                + new_project_html
+                + "\n"
             )
 
             new_content = (
