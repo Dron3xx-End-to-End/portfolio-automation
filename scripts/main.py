@@ -1,13 +1,8 @@
 import sys
 
-import jsbeautifier
 from bs4 import BeautifulSoup, Comment
 
 from scripts.parse_portfolio_update import parse_portfolio_update
-
-config = jsbeautifier.default_options()
-config.indent_with_tabs = True
-config.indent_size = 1
 
 source_file = sys.argv[1]
 portfolio = sys.argv[2]
@@ -148,51 +143,82 @@ def modify_portfolio(portfolio, repo_url):
             new_project_name = soup.new_tag("h5")
             new_project_name["class"] = "project-name"
             new_project_name["data-i18n"] = RepoName
+            new_project_name.append("\n\t\t")
             new_project_name.append(data["project_name"])
+            new_project_name.append("\n\t")
+            new_project.append("\n")
+            new_project.append("\t")
             new_project.append(new_project_name)
 
             new_project_description = soup.new_tag("p")
             new_project_description["class"] = "project-description"
             new_project_description["data-i18n"] = RepoName + "Description"
+            new_project_description.append("\n\t\t")
             new_project_description.append(data["description_en"])
+            new_project_description.append("\n\t")
+            new_project.append("\n\n")
+            new_project.append("\t")
             new_project.append(new_project_description)
 
             new_project_tech = soup.new_tag("h4")
             new_project_tech["class"] = "project-technologies"
             new_project_tech["data-i18n"] = "TechnologiesUsed"
+            new_project_tech.append("\n\t\t")
             new_project_tech.append("Technologies used:")
+            new_project_tech.append("\n\t")
+            new_project.append("\n\n")
+            new_project.append("\t")
             new_project.append(new_project_tech)
 
             new_project_tech_list = soup.new_tag("ul")
             new_project_tech_list["class"] = "project-technologies-list"
+
             for tech in data["technologies"]:
                 tech_item = soup.new_tag("li")
+                tech_item.append("\n\t\t")
+
                 if tech in DEVICONS:
                     tech_item_devicon = soup.new_tag("i")
                     tech_item_devicon["class"] = DEVICONS[tech]
                     tech_item.append(tech_item_devicon)
+                    tech_item.append("\n\t\t")
+
                 tech_item.append(tech)
+                tech_item.append("\n\t")
+
+                new_project_tech_list.append("\n\n\t")
                 new_project_tech_list.append(tech_item)
+
+            new_project_tech_list.append("\n")
+            new_project.append("\n\n")
+            new_project.append("\t")
             new_project.append(new_project_tech_list)
 
             new_project_status = soup.new_tag("p")
             new_project_status["class"] = "project-status"
             new_project_status["data-i18n"] = "Status" + ProjectStatus
+            new_project_status.append("\n\t\t")
             new_project_status.append("Status: " + data["project_status"])
+            new_project_status.append("\n\t")
+            new_project.append("\n\n")
+            new_project.append("\t")
             new_project.append(new_project_status)
 
             new_project_link = soup.new_tag("a")
             new_project_link["href"] = https
             new_project_link["target"] = "_blank"
             new_project_link["class"] = "btn project-link"
+            new_project_link.append("\n\t\t")
             new_project_link.append("GitHub")
+            new_project_link.append("\n\t")
+            new_project.append("\n\n")
+            new_project.append("\t")
             new_project.append(new_project_link)
 
-            formatted_project = jsbeautifier.beautify(
-                str(new_project),
-                config
-            )
-            print(formatted_project)
+            new_project.append("\n")
+
+            new_content = before_marker + str(new_project) + after_marker
+            print(new_content)
     return soup
 
 
