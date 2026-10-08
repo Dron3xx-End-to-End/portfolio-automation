@@ -1,7 +1,13 @@
 import sys
+
+import jsbeautifier
 from bs4 import BeautifulSoup, Comment
 
 from scripts.parse_portfolio_update import parse_portfolio_update
+
+config = jsbeautifier.default_options()
+config.indent_with_tabs = True
+config.indent_size = 1
 
 source_file = sys.argv[1]
 portfolio = sys.argv[2]
@@ -182,8 +188,11 @@ def modify_portfolio(portfolio, repo_url):
             new_project_link.append("GitHub")
             new_project.append(new_project_link)
 
-            new_content = before_marker + str(new_project) + after_marker
-            print(new_content)
+            formatted_project = jsbeautifier.beautify(
+                str(new_project),
+                config
+            )
+            print(formatted_project)
     return soup
 
 
