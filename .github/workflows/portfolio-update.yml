@@ -46,6 +46,6 @@ jobs:
 
       - name: Update portfolio repository
         run: | 
-          python scripts/main.py source-portfolio-update.md \
+          python -m scripts.main source-portfolio-update.md \
           aws-cloud-website/index.html \
           ${{ github.event.client_payload.repo_url }}
