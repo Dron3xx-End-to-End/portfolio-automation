@@ -11,8 +11,11 @@ repo_url = sys.argv[3]
 data = parse_portfolio_update(source_file)
 print(data)
 
-if data["project_name"] == "":
-    print("Missing project name in source file")
+if data["project_name_en"] == "":
+    print("Missing english project name in source file")
+    sys.exit(1)
+elif data["project_name_pl"] == "":
+    print("Missing polish project name in source file")
     sys.exit(1)
 elif data["technologies"] == []:
     print("Missing technologies in source file")
