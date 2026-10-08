@@ -129,13 +129,31 @@ def modify_portfolio(portfolio, repo_url):
 
     else:
         print("creating new project")
+
         projects_list = soup.find("ul", class_="projects-list")
-        marker = projects_list.find(string=lambda text: isinstance(text, Comment))
+        marker = projects_list.find(
+            string=lambda text: isinstance(text, Comment)
+        )
+
         full_marker = "<!--" + str(marker) + "-->"
-        marker_position = content.index(full_marker)
-        before_marker = content[:marker_position]
-        after_marker = content[marker_position:]
+        full_marker_position = content.index(full_marker)
+
+        marker_line_start = content.rfind(
+            "\n",
+            0,
+            full_marker_position
+        ) + 1
+
+        before_marker = content[:marker_line_start]
+        after_marker = content[marker_line_start:]
+
+        marker_indent = content[
+            marker_line_start:full_marker_position
+        ]
+
         print(repr(marker))
+        print(f"Marker indent: {repr(marker_indent)}")
+
         if marker.strip() == "AUTO-GENERATED PROJECTS":
             new_project = soup.new_tag("li")
             new_project["class"] = "project-item"
@@ -146,16 +164,20 @@ def modify_portfolio(portfolio, repo_url):
             new_project_name.append("\n\t\t")
             new_project_name.append(data["project_name"])
             new_project_name.append("\n\t")
+
             new_project.append("\n")
             new_project.append("\t")
             new_project.append(new_project_name)
 
             new_project_description = soup.new_tag("p")
             new_project_description["class"] = "project-description"
-            new_project_description["data-i18n"] = RepoName + "Description"
+            new_project_description["data-i18n"] = (
+                RepoName + "Description"
+            )
             new_project_description.append("\n\t\t")
             new_project_description.append(data["description_en"])
             new_project_description.append("\n\t")
+
             new_project.append("\n\n")
             new_project.append("\t")
             new_project.append(new_project_description)
@@ -166,12 +188,15 @@ def modify_portfolio(portfolio, repo_url):
             new_project_tech.append("\n\t\t")
             new_project_tech.append("Technologies used:")
             new_project_tech.append("\n\t")
+
             new_project.append("\n\n")
             new_project.append("\t")
             new_project.append(new_project_tech)
 
             new_project_tech_list = soup.new_tag("ul")
-            new_project_tech_list["class"] = "project-technologies-list"
+            new_project_tech_list["class"] = (
+                "project-technologies-list"
+            )
 
             for tech in data["technologies"]:
                 tech_item = soup.new_tag("li")
@@ -190,16 +215,22 @@ def modify_portfolio(portfolio, repo_url):
                 new_project_tech_list.append(tech_item)
 
             new_project_tech_list.append("\n")
+
             new_project.append("\n\n")
             new_project.append("\t")
             new_project.append(new_project_tech_list)
 
             new_project_status = soup.new_tag("p")
             new_project_status["class"] = "project-status"
-            new_project_status["data-i18n"] = "Status" + ProjectStatus
+            new_project_status["data-i18n"] = (
+                "Status" + ProjectStatus
+            )
             new_project_status.append("\n\t\t")
-            new_project_status.append("Status: " + data["project_status"])
+            new_project_status.append(
+                "Status: " + data["project_status"]
+            )
             new_project_status.append("\n\t")
+
             new_project.append("\n\n")
             new_project.append("\t")
             new_project.append(new_project_status)
@@ -211,13 +242,29 @@ def modify_portfolio(portfolio, repo_url):
             new_project_link.append("\n\t\t")
             new_project_link.append("GitHub")
             new_project_link.append("\n\t")
+
             new_project.append("\n\n")
             new_project.append("\t")
             new_project.append(new_project_link)
 
-            new_project.append("\n")
+            new_project.append("\n\n")
 
-            new_content = before_marker + str(new_project) + after_marker
+            new_project_html = str(new_project)
+
+            new_project_html = (
+                marker_indent
+                + new_project_html.replace(
+                    "\n",
+                    "\n" + marker_indent
+                )
+            )
+
+            new_content = (
+                before_marker
+                + new_project_html
+                + after_marker
+            )
+
             print(new_content)
     return soup
 
