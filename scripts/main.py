@@ -178,6 +178,7 @@ def load_portfolio(portfolio, repo_url):
             new_project.append(new_project_link)
 
             marker.insert_before(new_project)
+            print(soup)
     return soup
 
 
