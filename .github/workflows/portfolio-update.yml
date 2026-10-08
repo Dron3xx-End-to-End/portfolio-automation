@@ -9,6 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout automation repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Checkout portfolio repository
+        uses: actions/checkout@v7.0.0
+        with:
+          repository: Dron3xx-End-to-End/aws-cloud-website
+          path: aws-cloud-website
+
       - name: Show repo url
         run: echo "${{ github.event.client_payload.repo_url }}"
 
@@ -29,15 +38,6 @@ jobs:
                -o source-portfolio-update.md
 
           cat source-portfolio-update.md
-
-      - name: Checkout automation repository
-        uses: actions/checkout@v7.0.0
-
-      - name: Checkout portfolio repository
-        uses: actions/checkout@v7.0.0
-        with:
-          repository: Dron3xx-End-to-End/aws-cloud-website
-          path: aws-cloud-website
 
       - name: Install dependencies
         run: |
