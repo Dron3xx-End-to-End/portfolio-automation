@@ -30,5 +30,19 @@ jobs:
 
           cat source-portfolio-update.md
 
+      - name: Checkout portfolio repository
+        uses: actions/checkout@v7.0.0
+        with:
+          repository: Dron3xx-End-to-End/aws-cloud-website
+          path: aws-cloud-website
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install beautifulsoup4
+
       - name: Parse source file
-        run: python scripts/parse-portfolio-update.py source-portfolio-update.md
+        run: | 
+          python scripts/main.py source-portfolio-update.md \
+          aws-cloud-website/index.html \
+          ${{ github.event.client_payload.repo_url }}

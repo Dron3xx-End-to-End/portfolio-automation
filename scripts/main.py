@@ -1,6 +1,27 @@
+import sys
 from bs4 import BeautifulSoup
 
-repo_url = "git://github.com/Dron3xx-End-to-End/Stiukov.git"
+from scripts.parse_portfolio_update import parse_portfolio_update
+
+source_file = sys.argv[1]
+portfolio = sys.argv[2]
+repo_url = sys.argv[3]
+
+data = parse_portfolio_update(source_file)
+print(data)
+
+if data["project_name"] == "":
+    print("Missing project name in source file")
+    sys.exit(1)
+elif data["technologies"] == []:
+    print("Missing technologies in source file")
+    sys.exit(1)
+elif data["description_en"] == "":
+    print("Missing description_en in source file")
+    sys.exit(1)
+elif data["description_pl"] == "":
+    print("Missing description_pl in source file")
+    sys.exit(1)
 
 
 def get_repo_name(repo_url):
@@ -8,7 +29,7 @@ def get_repo_name(repo_url):
     return repo_name
 
 
-def load_portfolio(portfolio):
+def load_portfolio(portfolio, repo_url):
     with open(portfolio, "r", encoding="utf-8") as f:
         content = f.read()
 
@@ -36,6 +57,39 @@ def load_portfolio(portfolio):
             print(f"{project_to_update}")
 
     if project_found:
+
+        project_name = (
+            project_to_update
+            .find("h5", class_="project-name")
+            .get_text(strip=True)
+        )
+        print(f"Project name: {project_name}")
+
+        project_description = (
+            project_to_update
+            .find("p", class_="project-description")
+            .get_text(strip=True)
+        )
+        print(f"Project description: {project_description}")
+
+        project_tech_list = (
+            project_to_update
+            .find("ul", class_="project-technologies-list")
+            .find_all("li")
+        )
+
+        technologies = []
+
+        for technology in project_tech_list:
+            technologies.append(technology.get_text(strip=True))
+        print(f"Project technologies: {technologies}")
+
+        project_status = (
+            project_to_update
+            .find("p", class_="project-status")
+            .get_text(strip=True)
+        )
+        print(f"Project status: {project_status}")
         print("update")
     else:
         print("creating new project")
@@ -43,4 +97,4 @@ def load_portfolio(portfolio):
     return soup
 
 
-soup = load_portfolio("../aws-cloud-website/index.html")
+soup = load_portfolio(portfolio, repo_url)

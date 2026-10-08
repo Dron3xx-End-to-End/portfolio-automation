@@ -1,8 +1,3 @@
-import sys
-
-source_file = sys.argv[1]
-
-
 def parse_portfolio_update(source_file):
     data = {
         "project_name": "",
@@ -40,19 +35,3 @@ def parse_portfolio_update(source_file):
                     data["description_pl"] = strip_line
 
     return data
-
-
-data = parse_portfolio_update(source_file)
-
-if data["project_name"] == "":
-    print("Missing project name in source file")
-    sys.exit(1)
-elif data["technologies"] == []:
-    print("Missing technologies in source file")
-    sys.exit(1)
-elif data["description_en"] == "":
-    print("Missing description_en in source file")
-    sys.exit(1)
-elif data["description_pl"] == "":
-    print("Missing description_pl in source file")
-    sys.exit(1)
