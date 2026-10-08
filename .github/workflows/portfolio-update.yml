@@ -30,6 +30,9 @@ jobs:
 
           cat source-portfolio-update.md
 
+      - name: Checkout automation repository
+        uses: actions/checkout@v7.0.0
+
       - name: Checkout portfolio repository
         uses: actions/checkout@v7.0.0
         with:
@@ -41,7 +44,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install beautifulsoup4
 
-      - name: Parse source file
+      - name: Update portfolio repository
         run: | 
           python scripts/main.py source-portfolio-update.md \
           aws-cloud-website/index.html \
