@@ -130,7 +130,8 @@ def modify_portfolio(portfolio, repo_url):
         print("creating new project")
         projects_list = soup.find("ul", class_="projects-list")
         marker = projects_list.find(string=lambda text: isinstance(text, Comment))
-        marker_position = content.index(str(marker))
+        full_marker = "<!--" + str(marker) + "-->"
+        marker_position = content.index(full_marker)
         before_marker = content[:marker_position]
         after_marker = content[marker_position:]
         print(repr(marker))
