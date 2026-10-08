@@ -46,7 +46,7 @@ def get_repo_name(repo_url):
     return repo_name
 
 
-def load_portfolio(portfolio, repo_url):
+def modify_portfolio(portfolio, repo_url):
     with open(portfolio, "r", encoding="utf-8") as f:
         content = f.read()
 
@@ -130,6 +130,9 @@ def load_portfolio(portfolio, repo_url):
         print("creating new project")
         projects_list = soup.find("ul", class_="projects-list")
         marker = projects_list.find(string=lambda text: isinstance(text, Comment))
+        marker_position = content.index(str(marker))
+        before_marker = content[:marker_position]
+        after_marker = content[marker_position:]
         print(repr(marker))
         if marker.strip() == "AUTO-GENERATED PROJECTS":
             new_project = soup.new_tag("li")
@@ -178,9 +181,9 @@ def load_portfolio(portfolio, repo_url):
             new_project_link.append("GitHub")
             new_project.append(new_project_link)
 
-            marker.insert_before(new_project)
-            print(soup)
+            new_content = before_marker + str(new_project) + after_marker
+            print(new_content)
     return soup
 
 
-soup = load_portfolio(portfolio, repo_url)
+soup = modify_portfolio(portfolio, repo_url)
