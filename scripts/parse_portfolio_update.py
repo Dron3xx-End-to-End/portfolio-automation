@@ -1,6 +1,7 @@
 def parse_portfolio_update(source_file):
     data = {
-        "project_name": "",
+        "project_name_en": "",
+        "project_name_pl": "",
         "description_en": "",
         "description_pl": "",
         "technologies": [],
@@ -23,8 +24,11 @@ def parse_portfolio_update(source_file):
                 under_section = strip_line.replace("### ", "").lower()
 
             else:
-                if section == "project name":
-                    data["project_name"] = strip_line
+                if section == "project name" and under_section == "english":
+                    data["project_name_en"] = strip_line
+
+                elif section == "project name" and under_section == "polski":
+                    data["project_name_pl"] = strip_line
 
                 elif section == "technologies":
                     data["technologies"].append(strip_line.strip("- "))

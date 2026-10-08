@@ -162,7 +162,7 @@ def modify_portfolio(portfolio, repo_url):
             new_project_name["class"] = "project-name"
             new_project_name["data-i18n"] = RepoName
             new_project_name.append("\n\t\t")
-            new_project_name.append(data["project_name"])
+            new_project_name.append(data["project_name_en"])
             new_project_name.append("\n\t")
 
             new_project.append("\n")
@@ -264,6 +264,7 @@ def modify_portfolio(portfolio, repo_url):
                 + new_project_html
                 + after_marker
             )
+            new_project_html += "\n"
 
             print(new_content)
     return soup

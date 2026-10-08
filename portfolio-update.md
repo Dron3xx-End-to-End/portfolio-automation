@@ -2,7 +2,13 @@
 
 ## Project Name
 
+### English
+
 Portfolio Automation
+
+### Polski
+
+Automatyzacja Portfolio
 
 ## Description
 
