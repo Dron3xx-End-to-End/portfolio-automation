@@ -257,10 +257,12 @@ def modify_portfolio(portfolio, repo_url):
             new_content = (
                 before_marker
                 + new_project_html
+                + "\n"
                 + after_marker
             )
 
             print(new_content)
+            print(repr(marker_indent))
     return soup
 
 
