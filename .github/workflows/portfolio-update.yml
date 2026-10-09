@@ -20,6 +20,13 @@ jobs:
           private-key: ${{ secrets.PORTFOLIO_APP_PRIVATE_KEY }}
           permission-contents: write
 
+      - name: Verify portfolio write access
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh api repos/Dron3xx-End-to-End/aws-cloud-website \
+            --jq '{full_name: .full_name, permissions: .permissions}
+
       - name: Checkout portfolio repository
         uses: actions/checkout@v7.0.0
         with:
