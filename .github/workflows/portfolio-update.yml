@@ -18,6 +18,8 @@ jobs:
         with:
           client-id: ${{ vars.PORTFOLIO_CLIENT_ID }}
           private-key: ${{ secrets.PORTFOLIO_APP_PRIVATE_KEY }}
+          owner: Dron3xx-End-to-End
+          repositories: aws-cloud-website
           permission-contents: write
 
       - name: Verify portfolio write access
@@ -26,6 +28,13 @@ jobs:
         run: |
           gh api repos/Dron3xx-End-to-End/aws-cloud-website \
             --jq '{full_name: .full_name, permissions: .permissions}'
+
+      - name: Verify token repository scope
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh api /installation/repositories \
+            --jq '[.repositories[].full_name]'
 
       - name: Checkout portfolio repository
         uses: actions/checkout@v7.0.0
