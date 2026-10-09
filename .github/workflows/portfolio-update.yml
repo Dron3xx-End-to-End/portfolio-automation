@@ -60,7 +60,9 @@ jobs:
           git config user.email "${{ env.GITHUB_EMAIL }}"
 
           git diff
-          git add index.html language.js
+          ls -la
+          ls -la js/
+          git add index.html js/language.js
 
           if git diff-index --quiet HEAD --; then
             echo "Brak zmian do wdrożenia."
