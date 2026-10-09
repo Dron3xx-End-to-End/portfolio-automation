@@ -12,21 +12,22 @@ jobs:
       - name: Checkout automation repository
         uses: actions/checkout@v7.0.0
 
-      - name: Checkout portfolio repository
-        uses: actions/checkout@v7.0.0
-        with:
-          repository: Dron3xx-End-to-End/aws-cloud-website
-          path: aws-cloud-website
-
-      - name: Show repo url
-        run: echo "${{ github.event.client_payload.repo_url }}"
-
       - name: Generate token
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
           client-id: ${{ vars.PORTFOLIO_APP_ID }}
           private-key: ${{ secrets.PORTFOLIO_APP_PRIVATE_KEY }}
+
+      - name: Checkout portfolio repository
+        uses: actions/checkout@v7.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          repository: Dron3xx-End-to-End/aws-cloud-website
+          path: aws-cloud-website
+
+      - name: Show repo url
+        run: echo "${{ github.event.client_payload.repo_url }}"
 
       - name: Download portfolio update
         run: |    
@@ -49,3 +50,22 @@ jobs:
           python -m scripts.main source-portfolio-update.md \
           aws-cloud-website/index.html \
           ${{ github.event.client_payload.repo_url }}
+
+      - name: Commit and push updated portfolio
+        env:
+          GITHUB_USER: "github-actions[bot]"
+          GITHUB_EMAIL: "github-actions[bot]@users.noreply.github.com"
+        run: |
+          git config user.name "${{ env.GITHUB_USER }}"
+          git config user.email "${{ env.GITHUB_EMAIL }}"
+
+          git diff
+          git add index.html language.js
+
+          if git diff-index --quiet HEAD --; then
+            echo "Brak zmian do wdrożenia."
+          else
+            git commit -m "Added new project card"
+            git push
+          fi
+        working-directory: ./aws-cloud-website

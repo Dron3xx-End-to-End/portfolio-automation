@@ -46,9 +46,9 @@ def modify_portfolio(portfolio, repo_url):
 
     repo_name = get_repo_name(repo_url)
 
-    RepoName = repo_name.replace("-", " ")
-    RepoName = RepoName.title()
-    RepoName = RepoName.replace(" ", "")
+    repo_name_key = repo_name.replace("-", " ")
+    repo_name_key = repo_name_key.title()
+    repo_name_key = repo_name_key.replace(" ", "")
 
     https = (repo_url
              .replace("git://", "https://")
@@ -140,7 +140,7 @@ def modify_portfolio(portfolio, repo_url):
 
             new_project_html = build_project_html(
                 data,
-                RepoName,
+                repo_name_key,
                 https,
                 marker_indent,
             )
