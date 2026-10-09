@@ -152,8 +152,9 @@ def modify_portfolio(portfolio, repo_url):
                 + after_marker
             )
             print(new_content)
-            print(repr(marker_indent))
-    return soup
+            with open(portfolio, "w", encoding="utf-8") as f:
+                f.write(new_content)
+    return new_content
 
 
-soup = modify_portfolio(portfolio, repo_url)
+new_content = modify_portfolio(portfolio, repo_url)
