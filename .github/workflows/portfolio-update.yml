@@ -16,7 +16,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
-          client-id: ${{ vars.PORTFOLIO_APP_ID }}
+          client-id: ${{ vars.PORTFOLIO_CLIENT_ID }}
           private-key: ${{ secrets.PORTFOLIO_APP_PRIVATE_KEY }}
           permission-contents: write
 
