@@ -1,3 +1,5 @@
+from utils.translation_utils import build_translation_key
+
 DEVICONS = {
     "GitHub": "devicon-github-plain colored",
     "Cloud": "devicon-cloud-plain colored",
@@ -38,9 +40,11 @@ def build_technology_html(technologies, indent):
     return "\n".join(items)
 
 
-def build_project_html(data, repo_name, repo_url, marker_indent):
+def build_project_html(data, repo_url, marker_indent):
     child_indent = marker_indent + "    "
     text_indent = child_indent + "    "
+
+    new_project_key = build_translation_key(data["project_name_en"])
 
     technologies_html = build_technology_html(
         data["technologies"],
@@ -50,12 +54,12 @@ def build_project_html(data, repo_name, repo_url, marker_indent):
     project_html = (
         f'{marker_indent}<li class="project-item">\n'
         f'{child_indent}<h5 class="project-name" '
-        f'data-i18n="{repo_name}">\n'
+        f'data-i18n="{new_project_key}">\n'
         f'{text_indent}{data["project_name_en"]}\n'
         f'{child_indent}</h5>\n'
         f'\n'
         f'{child_indent}<p class="project-description" '
-        f'data-i18n="{repo_name}Description">\n'
+        f'data-i18n="{new_project_key}Description">\n'
         f'{text_indent}{data["description_en"]}\n'
         f'{child_indent}</p>\n'
         f'\n'

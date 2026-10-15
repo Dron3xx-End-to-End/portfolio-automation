@@ -22,20 +22,6 @@ jobs:
           repositories: aws-cloud-website
           permission-contents: write
 
-      - name: Verify portfolio write access
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          gh api repos/Dron3xx-End-to-End/aws-cloud-website \
-            --jq '{full_name: .full_name, permissions: .permissions}'
-
-      - name: Verify token repository scope
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          gh api /installation/repositories \
-            --jq '[.repositories[].full_name]'
-
       - name: Checkout portfolio repository
         uses: actions/checkout@v7.0.0
         with:
@@ -66,7 +52,8 @@ jobs:
         run: | 
           python -m scripts.main source-portfolio-update.md \
           aws-cloud-website/index.html \
-          ${{ github.event.client_payload.repo_url }}
+          ${{ github.event.client_payload.repo_url }} \
+          aws-cloud-website/js/language.js
 
       - name: Commit and push updated portfolio
         env:
@@ -82,7 +69,7 @@ jobs:
           if git diff-index --quiet HEAD --; then
             echo "Brak zmian do wdrożenia."
           else
-            git commit -m "Added new project card"
+            git commit -m "Updated projects cards"
             git push
           fi
         working-directory: ./aws-cloud-website
