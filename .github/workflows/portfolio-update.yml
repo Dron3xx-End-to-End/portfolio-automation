@@ -56,11 +56,11 @@ jobs:
           aws-cloud-website/js/language.js
 
       - name: Format JavaScript
-        run: npx biome format --write ./js
+        run: npx @biomejs/biome format --write ./js
         working-directory: ./aws-cloud-website
 
       - name: Check JavaScript
-        run: npx biome check ./js
+        run: npx @biomejs/biome check ./js
         working-directory: ./aws-cloud-website
 
       - name: Commit and push updated portfolio
