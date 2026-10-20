@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup, Comment
 
-from scripts.creators.html_creator import build_project_html, build_technology_html
+from creators.html_creator import build_project_html, build_technology_html
 from utils.translation_utils import build_translation_key
 
 def get_repo_name(repo_url):
@@ -109,7 +109,7 @@ def modify_portfolio(portfolio, repo_url, data):
 
             old_description_attribute = f'data-i18n="{old_description_key}"'
             new_description_attribute = f'data-i18n="{new_project_key}Description"'
-            
+
             project_name_index = between.index(project_name)
             absolute_name_index = project_start_index + project_name_index
             before = new_content[:absolute_name_index] 
@@ -182,10 +182,9 @@ def modify_portfolio(portfolio, repo_url, data):
 
             html_tech_list = build_technology_html(
                 data["technologies"],
-                marker_indent
+                marker_indent + "\t",
             )
-
-            new_content = before + html_tech_list + after
+            new_content = before + "\n" + html_tech_list + "\n\t\t\t\t" + after
 
             url_index = new_content.index(url)
             between = new_content[project_start_index:url_index]
@@ -245,7 +244,10 @@ def modify_portfolio(portfolio, repo_url, data):
 
 
         before_marker = content[:marker_line_start]
-        after_marker = content[marker_line_start:]
+        after_marker = content[
+            marker_line_start:full_marker_position + len(full_marker)
+        ]
+        after = content[full_marker_position + len(full_marker):]
 
         print(repr(marker))
         print(f"Marker indent: {repr(marker_indent)}")
@@ -263,7 +265,9 @@ def modify_portfolio(portfolio, repo_url, data):
                 + after_marker
                 + "\n"
                 + new_project_html
+                + after
             )
+
             print(new_content)
             with open(portfolio, "w", encoding="utf-8") as f:
                 f.write(new_content)

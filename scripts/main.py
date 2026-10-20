@@ -1,8 +1,8 @@
 import sys
 
-from scripts.parse_portfolio_update import parse_portfolio_update
-from scripts.updaters.html_updater import modify_portfolio
-from scripts.updaters.translation_updater import modify_language
+from parse_portfolio_update import parse_portfolio_update
+from updaters.html_updater import modify_portfolio
+from updaters.translation_updater import modify_language
 
 source_file = sys.argv[1]
 portfolio = sys.argv[2]

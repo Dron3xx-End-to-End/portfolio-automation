@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+:root{ 
+    --primary-color: #333;
+    --secondary-color: #b8cef6; 
+    --accent-color: #e0e0e0; 
+    --text-color: #000000;
+}
+
+/* Reset some default styles */ 
+body{
+    display: grid;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: var(--text-color);
+    background-color: #7995ca;
+}
+
+a{
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: var(--primary-color);
+}
+
+p{
+    line-height: 1.6;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+li{
+    padding: 3px;
+}
+/*end of reset styles*/
+
+.container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 20px;
+}
+
+/*header*/
+header{
+    background-color: var(--primary-color);
+    padding: 20px;
+    margin-bottom: 10px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+header h1{
+    margin: 0;
+    color: white;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+.lang_button{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.lang_button:hover{
+    background-color: #66b3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.lang_button:active{
+    background-color: #4d94ff;
+}
+/*end of header*/
+
+/*main*/
+main{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+section:not(:nth-child(2)){
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.home {
+    background-color: var(--secondary-color);
+    padding: 20px;
+}
+.home .btn{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.home .btn:hover{
+    background-color: #66b3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.home p{
+    color: var(--text-color);
+}
+
+.skiedu{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.panel{
+    background-color: var(--secondary-color);
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+}
+.skills ul li{
+    color: var(--text-color);
+}
+.education ul{
+    padding: 0;
+}
+.education ul li{
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+.education ul li a{
+    color: var(--primary-color);
+}
+
+.projects{
+    display: grid;
+    background-color: var(--secondary-color);
+}
+.projects ul{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 0;
+}
+#project-move > ul{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow: hidden;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    justify-self: stretch;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+#project-move > ul.is-centered{
+    justify-content: center;
+}
+#project-move > ul > li{
+    width: 200px;
+    margin: 10px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+#project-move{
+    display: grid;
+    grid-template-columns: 15px minmax(0, 1fr) 15px;
+    overflow: hidden;
+}
+#arrow-left,
+#arrow-right{
+    width: 20px;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#arrow-left::before,
+#arrow-right::before{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+}
+#arrow-left::before{
+  border-right: 12px solid black;
+}
+#arrow-right::before{
+  border-left: 12px solid black;
+}
+.project-item{
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 10px;
+    margin: 0 10px;
+    width: 100%;
+    width: 200px;
+}
+.project-item .btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 38px;
+    box-sizing: border-box;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.project-item .btn:hover{
+    background-color: #66b3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.project-item p{
+    margin: 0px;
+}
+.project-item h5, .project-item h4{
+    margin: 0px;
+}
+.project-item ul{
+    display: grid;
+}
+.project-item ul li{
+    margin: 0px;
+    padding: 2px;
+    min-height: 20px;
+}
+/*end of main*/
+
+/*footer*/
+footer{
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    padding: 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+footer a{
+    color: var(--accent-color);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+/*end of footer*/
+
+/*Mobile*/
+@media (max-width: 768px){
+    .skiedu{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .skills,
+    .education{
+        width: 100%;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    #project-move{
+        grid-template-columns: 18px minmax(0, 1fr) 18px;
+    }
+
+    #project-move > ul > li,
+    .project-item{
+        width: calc(100% - 16px);
+        min-width: calc(100% - 16px);
+        margin: 0 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    #project-move > ul{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow: hidden;
+        width: 100%;
+        max-width: none;
+        justify-self: stretch;
+        padding: 0;
+    }
+}
+/*end of mobile*/
