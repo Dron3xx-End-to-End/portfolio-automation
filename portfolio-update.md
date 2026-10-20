@@ -25,6 +25,7 @@ Automatyzuje aktualizacje projektów portfolio za pomocą GitHub Actions.
 - GitHub Actions
 - GitHub API
 - Python
+- Biome
 
 ## Status
 
