@@ -14,11 +14,11 @@ Automatyzacja Portfolio
 
 ### English
 
-GitHub Actions automation for automatically processing project updates and synchronizing them with a Cloud & DevOps portfolio.
+Automates portfolio project updates with GitHub Actions.
 
 ### Polski
 
-Automatyzacja GitHub Actions do przetwarzania aktualizacji projektów i synchronizacji ich z portfolio Cloud & DevOps.
+Automatyzuje aktualizacje projektów portfolio za pomocą GitHub Actions.
 
 ## Technologies
 
@@ -28,4 +28,4 @@ Automatyzacja GitHub Actions do przetwarzania aktualizacji projektów i synchron
 
 ## Status
 
-In progress
+Completed

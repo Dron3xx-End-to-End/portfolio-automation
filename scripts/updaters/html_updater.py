@@ -238,6 +238,8 @@ def modify_portfolio(portfolio, repo_url, data):
             between = new_content[project_start_index:url_index]
 
         print(new_content)
+        with open(portfolio, "w", encoding="utf-8") as f:
+            f.write(new_content)
 
     else:
         print("creating new project")
