@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [project-update]
 
+concurrency:
+  group: portfolio-update
+  cancel-in-progress: false
+
 jobs:
   update-portfolio:
     runs-on: ubuntu-latest
