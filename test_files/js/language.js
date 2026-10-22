@@ -1,3 +1,4 @@
+
 const pl = document.getElementById("pl");
 const eng = document.getElementById("eng");
 
@@ -42,8 +43,8 @@ const translations = {
 		// AUTO-GENERATED PL TRANSLATIONS
 
 		PortfolioAutomation: "Automatyzacja Portfolio",
-		PortfolioAutomationDescription: "Automatyzacja GitHub Actions do przetwarzania aktualizacji projektów i synchronizacji ich z portfolio Cloud & DevOps.",
-
+		PortfolioAutomationDescription:
+			"Automatyzuje aktualizacje projektów portfolio za pomocą GitHub Actions.",
 
 		StatusFinished: "Status: Zakończony",
 		StatusInProgress: "Status: W trakcie",
@@ -54,6 +55,7 @@ const translations = {
 		LastUpdated: "Ostatnia aktualizacja:",
 	},
 	// END PL TRANSLATIONS
+
 	// START ENG TRANSLATIONS
 	eng: {
 		Welcome: "Welcome to My Portfolio",
@@ -93,8 +95,8 @@ const translations = {
 		// AUTO-GENERATED ENG TRANSLATIONS
 
 		PortfolioAutomation: "Portfolio Automation",
-		PortfolioAutomationDescription: "GitHub Actions automation for automatically processing project updates and synchronizing them with a Cloud & DevOps portfolio.",
-
+		PortfolioAutomationDescription:
+			"Automates portfolio project updates with GitHub Actions.",
 
 		StatusInProgress: "Status: In progress",
 		StatusCompleted: "Status: Completed",

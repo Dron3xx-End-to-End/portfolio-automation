@@ -1,4 +1,5 @@
 from utils.translation_utils import build_translation_key
+from utils.html_utils import build_html_indentation
 
 DEVICONS = {
     "GitHub": "devicon-github-plain colored",
@@ -41,14 +42,17 @@ def build_technology_html(technologies, indent):
 
 
 def build_project_html(data, repo_url, marker_indent):
-    child_indent = marker_indent + "    "
-    text_indent = child_indent + "    "
+    indentation = build_html_indentation(marker_indent)
+
+    child_indent = indentation["child"]
+    text_indent = indentation["text"]
+    technology_indent = indentation["technology"]
 
     new_project_key = build_translation_key(data["project_name_en"])
 
     technologies_html = build_technology_html(
         data["technologies"],
-        child_indent + "    ",
+        technology_indent,
     )
 
     project_html = (

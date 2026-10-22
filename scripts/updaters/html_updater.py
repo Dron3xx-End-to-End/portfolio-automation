@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup, Comment
 
 from creators.html_creator import build_project_html, build_technology_html
 from utils.translation_utils import build_translation_key
+from utils.html_utils import build_html_indentation
 
 def get_repo_name(repo_url):
     repo_name = repo_url.split("/")[-1].removesuffix(".git")
@@ -81,6 +82,20 @@ def modify_portfolio(portfolio, repo_url, data):
         project_start_index = before_url.rfind(
             '<li class="project-item">'
         )
+
+        project_line_start = new_content.rfind(
+            "\n",
+            0,
+            project_start_index,
+        ) + 1
+
+        project_indent = new_content[
+            project_line_start:project_start_index
+        ]
+
+        indentation = build_html_indentation(project_indent)
+
+        technology_indent = indentation["technology"]
 
         before_project = new_content[:project_start_index]
         after_project = new_content[url_index:]
@@ -167,24 +182,44 @@ def modify_portfolio(portfolio, repo_url, data):
         print(f"Project technologies: {technologies}")
 
         if technologies != data["technologies"]:
-            tech_start_index = new_content[project_start_index:].rfind(
-                '<ul class="project-technologies-list">'
-            )
-            absolute_tech_start_index = project_start_index + tech_start_index
-            tech_end_index = new_content[absolute_tech_start_index:].find("</ul>")
-            absolute_tech_end_index = absolute_tech_start_index + tech_end_index
+            tech_start_tag = '<ul class="project-technologies-list">'
+            tech_end_tag = "</ul>"
 
-            before = new_content[:absolute_tech_start_index + len(
-                                     '<ul class="project-technologies-list">'
-                                    )
-                                ] 
-            after = new_content[absolute_tech_end_index:]
+            absolute_tech_start_index = new_content.index(
+                tech_start_tag,
+                project_start_index,
+            )
+
+            absolute_tech_end_index = new_content.index(
+                tech_end_tag,
+                absolute_tech_start_index + len(tech_start_tag),
+            )
+
+            closing_line_start = new_content.rfind(
+                "\n",
+                absolute_tech_start_index,
+                absolute_tech_end_index,
+            ) + 1
+
+            closing_indent = new_content[
+                closing_line_start:absolute_tech_end_index
+            ]
+
+            before = new_content[:absolute_tech_start_index + len(tech_start_tag)]
+            after = new_content[closing_line_start:]
 
             html_tech_list = build_technology_html(
                 data["technologies"],
-                marker_indent + "\t",
+                technology_indent,
             )
-            new_content = before + "\n" + html_tech_list + "\n\t\t\t\t" + after
+
+            new_content = (
+                before
+                + "\n"
+                + html_tech_list
+                + "\n"
+                + after
+            )
 
             url_index = new_content.index(url)
             between = new_content[project_start_index:url_index]
@@ -243,7 +278,6 @@ def modify_portfolio(portfolio, repo_url, data):
 
     else:
         print("creating new project")
-
 
         before_marker = content[:marker_line_start]
         after_marker = content[
